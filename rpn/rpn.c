@@ -5,20 +5,20 @@
 int main()
 {
 	int stack[10], top=-1, spec_sign = 0, c, line= 0;
-	while ((c = getchar())!= EOF){
-		while (c != '\n'){
-			if (isdigit(c)){
+	while ((c = getchar())!= EOF) {
+		while (c != '\n') {
+			if (isdigit(c)) {
 				top++;
-				if (top >= 10){
+				if (top >= 10) {
 					spec_sign=2;
 					goto end;
 				} else {
 				stack[top]= c -'0';
-				while (isdigit(c = getchar())){
+				while (isdigit(c = getchar())) {
 					stack[top] = stack[top] * 10 + c-'0';
 					}
 				}
-			} if (c == '+' || c == '-'|| c== '*' || c == '/' ){
+			} if (c == '+' || c == '-'|| c== '*' || c == '/' ) {
 				spec_sign = 1;
 				if (top < 1){
 					spec_sign = 2;
@@ -30,7 +30,7 @@ int main()
 						case '-': stack[top]-= stack[top+1]; break;
 						case '*': stack[top]*= stack[top+1]; break;
 						case '/':
-						 if (stack[top+1] == 0){
+						 if (stack[top+1] == 0) {
 							 spec_sign=2;
 							 goto end;
 						 } else {
@@ -41,7 +41,7 @@ int main()
 			} else if (c != ' '){
 				if (c!='\n')
 					spec_sign = 2;
-					goto end;
+				goto end;
 			}
 			c = getchar();
 		}
