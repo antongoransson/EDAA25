@@ -1,33 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <string.h>
+// SCORE 229
+#define SIZE sizeof(int)
 
 int main()
 {
-	int c,largest,k,x,i;
-	c= largest= i= 0;
-	int *word = malloc(1*sizeof(int));
-	int *a = malloc(1*sizeof(int));
+	int c, lst=0, i=0, ctr=0, index=0;
+	char *word = malloc(1*SIZE);
 	while ((c = getchar()) != EOF) {
-			while (isalpha(c)) {
-				a[i++] = c;
-				c = getchar();
-				a = realloc(a, (i+1)*sizeof(int));
+		word[i++] = c;
+		word = realloc(word,(i+1)*SIZE);
+		if (isalpha(c))
+			ctr++;
+		 else {
+			if (ctr > lst) {
+				lst = ctr;
+				index = i-1-lst;
 			}
-			if (i > largest) {
-				largest = i;
-				word = realloc(word,(largest)* sizeof(int));
-				for (x = 0; x < largest; ++x)
-					word[x]= a[x];
-			}
-			i= 0;
+		ctr = 0;
+		}
 	}
-	free(a);
-	printf("%d characters in longest word: ",largest);
-	for (k = 0; k < largest; ++k)
-		printf("%c", word[k]);
+	printf("%d characters in longest word: %.*s\n",lst, lst, word+index);
 	free(word);
-	printf("\n");
 	return 0;
 }
