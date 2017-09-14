@@ -6,7 +6,7 @@
 
 #include "error.h"
 #include "poly.h"
-// SCORE  908
+// SCORE  904
 
 struct poly_t {
   poly_t* next;
@@ -23,8 +23,8 @@ poly_t*	new_poly_from_string(const char* c)
   head = calloc(1,sizeof(poly_t));
   curr = head;
   curr->degree=0;
-  int i;
-  for (i = 0; i < strlen(c); i++) {
+  int i,l = strlen(c);
+  for (i = 0; i < l; i++) {
     if (c[i] == 'x') {
       i++;
       if (c[i] == '^') {
@@ -38,8 +38,8 @@ poly_t*	new_poly_from_string(const char* c)
       }
     } else if (isdigit(c[i])) {
       while (isdigit(c[i])) {
-        if (curr->nbr == -1)
-          curr->nbr = curr->nbr*(c[i]-'0');
+        if (curr->nbr == '-')
+          curr->nbr = -1*(c[i]-'0');
         else
           curr->nbr = curr->nbr*10 + c[i]-'0';
         i++;
@@ -51,9 +51,8 @@ poly_t*	new_poly_from_string(const char* c)
         if (curr->nbr == 0)
           curr->nbr=1;
         curr = next;
-        curr->degree = 0;
         if (c[i] == '-')
-          curr->nbr=-1;
+          curr->nbr= '-';
         else
           curr->nbr=0;
       }
@@ -71,10 +70,8 @@ poly_t* mul(poly_t* p1, poly_t* p2)
 
   curr = currp3 = newP;
   long d1,d2;
-  int nbr1,nbr2;
+  int nbr1,nbr2,same_deg = 0;
 
-
-  int same_deg=0;
   while (p1 != NULL) {
     d1 = p1->degree;
     nbr1 = p1->nbr;
